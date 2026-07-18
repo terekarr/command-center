@@ -17,7 +17,62 @@ const EMOJIS_MISSION = ['🛏️','🧸','🍴','🍽️','📚','🧺','🗑️
 const EMOJIS_RECETTE = ['🍝','🍗','🐟','🍕','🥣','🥞','🌮','🍔','🥗','🍚','🥘','🍜','🥧','🍳','🥪','🍛'];
 const EMOJIS_RECOMPENSE = ['🎬','🍦','🎮','🎁','🏊','🎡','🧁','⚽','🎨','📖'];
 const COULEURS = ['#f06ca8','#4b9cf0','#4bc98a','#f0a04b','#7c6cf0','#e0b040'];
-const TAGS_RECETTE = ['rapide','pâtes','poisson','viande','végé','soupe','sucré'];
+const TAGS_RECETTE = ['rapide','pâtes','poisson','viande','végé','soupe','sucré','salade','accompagnement','apéro'];
+// Ces tags ne sont pas des dîners : le suggéreur de semaine les ignore
+const TAGS_PAS_DINER = ['sucré','accompagnement','apéro'];
+
+// Les recettes de Teresa, importées de sa base Notion "Recipes" (2026-07-18).
+// Sans ingrédients pour l'instant — à compléter petit à petit dans l'app.
+const RECETTES_NOTION = [
+  { name: 'Apple crumble', emoji: '🍏', tags: ['sucré'] },
+  { name: 'Avo toast & eggs', emoji: '🥑', tags: ['rapide','végé'] },
+  { name: 'Avocado & salmon toast', emoji: '🥑', tags: ['rapide','poisson'] },
+  { name: 'Avocado chickpea salad', emoji: '🥑', tags: ['salade','végé'] },
+  { name: 'Bœuf bourguignon', emoji: '🥩', tags: ['viande'] },
+  { name: 'Bolo de brigadeiro', emoji: '🍫', tags: ['sucré'] },
+  { name: 'Brussel sprouts', emoji: '🍁', tags: ['accompagnement'] },
+  { name: 'Burgers', emoji: '🍔', tags: ['viande','rapide'] },
+  { name: 'Caesar salad', emoji: '🥬', tags: ['salade'] },
+  { name: 'Carnitas', emoji: '🐖', tags: ['viande'] },
+  { name: 'Ceviche', emoji: '🐟', tags: ['poisson'] },
+  { name: 'Chili con carne', emoji: '🌶️', tags: ['viande'] },
+  { name: 'Chocochitas', emoji: '🍪', tags: ['sucré'] },
+  { name: 'Chocolate cake', emoji: '🎂', tags: ['sucré'] },
+  { name: 'Chopped medi chicken salad', emoji: '🍗', tags: ['salade','viande'] },
+  { name: 'Chorisotto', emoji: '🍛', tags: ['viande'] },
+  { name: 'Chupe', emoji: '🍲', tags: ['soupe'] },
+  { name: 'Cinnamon rolls', emoji: '🥮', tags: ['sucré'] },
+  { name: 'Crispy chicken caesar cutlets', emoji: '🍗', tags: ['viande'] },
+  { name: 'Croziflette', emoji: '🫕', tags: ['viande'] },
+  { name: 'Dirt cake', emoji: '🧁', tags: ['sucré'] },
+  { name: 'Ensalada de esparragos', emoji: '🥗', tags: ['salade','végé'] },
+  { name: 'Focaccia Bruschetta', emoji: '🇮🇹', tags: ['végé'] },
+  { name: 'Frijoles', emoji: '🫘', tags: ['végé'] },
+  { name: 'Gratin', emoji: '🥔', tags: ['accompagnement'] },
+  { name: 'Guacamole', emoji: '🥑', tags: ['accompagnement','apéro'] },
+  { name: 'Lasagnes', emoji: '👨🏻', tags: ['pâtes','viande'] },
+  { name: 'Lemon blueberry loaf', emoji: '🫐', tags: ['sucré'] },
+  { name: 'Mediterranean Tuna Chickpea', emoji: '🥗', tags: ['salade','poisson'] },
+  { name: 'Nutella maison', emoji: '🍫', tags: ['sucré'] },
+  { name: 'Oatmeal Cookies', emoji: '🍪', tags: ['sucré'] },
+  { name: 'Pasta carbonara', emoji: '🍝', tags: ['pâtes'] },
+  { name: 'Pasta greens', emoji: '🍝', tags: ['pâtes','végé'] },
+  { name: 'Polvo Largareiro', emoji: '🐙', tags: ['poisson'] },
+  { name: 'Polvorosa de pollo', emoji: '🍗', tags: ['viande'] },
+  { name: 'Quiche aux brocolis', emoji: '🥚', tags: ['végé'] },
+  { name: 'Quiche chèvre épinards', emoji: '🥬', tags: ['végé'] },
+  { name: 'Reese’s buttercups', emoji: '❤️', tags: ['sucré'] },
+  { name: 'Salmon - Gordon Ramsay', emoji: '🎏', tags: ['poisson'] },
+  { name: 'Saucisses lentilles', emoji: '🐷', tags: ['viande'] },
+  { name: 'Saumon en croute', emoji: '🎏', tags: ['poisson'] },
+  { name: 'Shawarma', emoji: '🌯', tags: ['viande'] },
+  { name: 'Shawarma chicken pan with smashed potatoes', emoji: '🌯', tags: ['viande'] },
+  { name: 'Tagliatelles crevettes & chorizo', emoji: '🍤', tags: ['pâtes','poisson'] },
+  { name: 'Tequeños', emoji: '🇻🇪', tags: ['apéro'] },
+  { name: 'Torta de queso (familia)', emoji: '🍰', tags: ['sucré'] },
+  { name: 'Torta humeda de limon', emoji: '🍋', tags: ['sucré'] },
+  { name: 'Vegetable Lo Mein for Two', emoji: '🍜', tags: ['pâtes','végé'] },
+];
 
 const BRAVOS = [
   'Bravo {n} ! +{p} ⭐', 'Champion·ne, {n} ! +{p} ⭐', 'Et hop, +{p} points pour {n} ! 🎉',
@@ -382,6 +437,11 @@ function rendreMissions() {
 
 // --- Repas ---
 
+function resteNotion() {
+  const noms = new Set(state.recipes.map(r => norm(r.name)));
+  return RECETTES_NOTION.filter(r => !noms.has(norm(r.name)));
+}
+
 function repasDuJour(cle, jour) {
   const plan = (state.weekPlans[cle] || {})[jour];
   if (!plan) return null;
@@ -429,6 +489,7 @@ function rendreRepas() {
     <div class="card">
       ${recettes || '<p class="empty-msg">Ajoute tes recettes préférées !</p>'}
       ${estParent() ? `<button class="btn-secondary" style="width:100%;margin-top:8px" data-action="editerRecette">➕ Nouvelle recette</button>` : ''}
+      ${estParent() && resteNotion().length ? `<button class="btn-secondary" style="width:100%;margin-top:8px" data-action="importerNotion">📥 Importer mes recettes Notion (${resteNotion().length})</button>` : ''}
     </div>`;
 }
 
@@ -784,7 +845,10 @@ const actions = {
     }).length;
     let poisson = compteTag('poisson'), pates = compteTag('pâtes');
 
-    const pool = state.recipes.filter(r => !dejaPris.has(r.id)).sort(() => Math.random() - 0.5);
+    // seuls les "vrais dîners" sont proposés (pas les desserts, apéros ou accompagnements)
+    const pool = state.recipes
+      .filter(r => !dejaPris.has(r.id) && !(r.tags || []).some(t => TAGS_PAS_DINER.includes(t)))
+      .sort(() => Math.random() - 0.5);
     let ajouts = 0;
     for (let j = 0; j < 7; j++) {
       if (semaine[j]) continue;
@@ -801,6 +865,18 @@ const actions = {
     }
     sauver('weekPlans');
     toast(ajouts ? `✨ ${ajouts} repas proposé${ajouts > 1 ? 's' : ''} ! Touche un jour pour changer.` : 'La semaine est déjà remplie ! Retire un repas pour changer.');
+    rendreTout();
+  },
+
+  importerNotion() {
+    const nouvelles = resteNotion();
+    for (const r of nouvelles) {
+      state.recipes.push({ id: uid(), name: r.name, emoji: r.emoji, tags: r.tags, ingredients: '' });
+    }
+    state.recipes.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    sauver('recipes');
+    confettis(60);
+    toast(`📥 ${nouvelles.length} recettes Notion importées !`);
     rendreTout();
   },
 
