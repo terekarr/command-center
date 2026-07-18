@@ -9,4 +9,11 @@
 //   3. Remplace `null` ci-dessous par cet objet
 // (Claude peut te guider pas à pas !)
 
-window.FIREBASE_CONFIG = null;
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDfe9xBvwFGFPYrlPqmv1f9TDuTZnN2vEs",
+  authDomain: "qg-famille.firebaseapp.com",
+  projectId: "qg-famille",
+  storageBucket: "qg-famille.firebasestorage.app",
+  messagingSenderId: "283959161564",
+  appId: "1:283959161564:web:0d4d7e0dfedc42a8d27a19"
+};
