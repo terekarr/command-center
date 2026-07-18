@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>QG Famille</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="QG Famille">
+  <meta name="theme-color" content="#7c6cf0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Écran d'accueil : code famille (si Firebase est configuré) -->
+  <div id="screen-family-code" class="fullscreen hidden">
+    <div class="onboard-card">
+      <div class="onboard-logo">🏠</div>
+      <h1>QG Famille</h1>
+      <p>Entre le <strong>code famille</strong> — le même sur tous les téléphones de la famille.</p>
+      <input type="text" id="family-code-input" placeholder="ex : maison-soleil-42" autocomplete="off">
+      <button id="family-code-btn" class="btn-primary">C'est parti !</button>
+      <p class="hint">Choisis une phrase secrète facile à retenir, avec au moins 10 caractères.</p>
+    </div>
+  </div>
+
+  <!-- Écran : qui es-tu ? -->
+  <div id="screen-who" class="fullscreen hidden">
+    <div class="onboard-card">
+      <div class="onboard-logo">👋</div>
+      <h1>Qui es-tu ?</h1>
+      <div id="who-list" class="who-list"></div>
+    </div>
+  </div>
+
+  <!-- Application principale -->
+  <div id="app" class="hidden">
+    <header id="topbar">
+      <div class="topbar-title" id="topbar-title">Accueil</div>
+      <button id="profile-chip" title="Changer de profil"></button>
+    </header>
+
+    <main id="views">
+      <section id="view-home" class="view"></section>
+      <section id="view-meals" class="view hidden"></section>
+      <section id="view-grocery" class="view hidden"></section>
+      <section id="view-chores" class="view hidden"></section>
+      <section id="view-calendar" class="view hidden"></section>
+    </main>
+
+    <nav id="tabbar">
+      <button class="tab active" data-view="home"><span class="tab-icon">🏠</span><span class="tab-label">Accueil</span></button>
+      <button class="tab" data-view="meals"><span class="tab-icon">🍽️</span><span class="tab-label">Repas</span></button>
+      <button class="tab" data-view="grocery"><span class="tab-icon">🛒</span><span class="tab-label">Courses</span></button>
+      <button class="tab" data-view="chores"><span class="tab-icon">⭐</span><span class="tab-label">Missions</span></button>
+      <button class="tab" data-view="calendar"><span class="tab-icon">📅</span><span class="tab-label">Agenda</span></button>
+    </nav>
+  </div>
+
+  <!-- Fenêtre modale générique -->
+  <div id="modal-backdrop" class="hidden">
+    <div id="modal-box"></div>
+  </div>
+
+  <div id="confetti-layer"></div>
+  <div id="toast" class="hidden"></div>
+
+  <script src="firebase-config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
