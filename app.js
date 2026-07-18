@@ -289,6 +289,8 @@ $('#modal-backdrop').addEventListener('click', e => { if (e.target.id === 'modal
 
 // Sélecteurs d'emoji / couleur / tags dans les modales
 function pickerEmoji(liste, sel) {
+  // l'emoji actuel reste choisissable même s'il ne fait pas partie des propositions
+  if (sel && !liste.includes(sel)) liste = [sel, ...liste];
   return `<div class="emoji-pick" data-pick="emoji">` +
     liste.map(e => `<button type="button" class="${e === sel ? 'sel' : ''}" data-val="${e}">${e}</button>`).join('') + `</div>`;
 }
