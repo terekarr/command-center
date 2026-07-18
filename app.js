@@ -24,54 +24,98 @@ const TAGS_PAS_DINER = ['sucré','accompagnement','apéro'];
 // Les recettes de Teresa, importées de sa base Notion "Recipes" (2026-07-18).
 // Sans ingrédients pour l'instant — à compléter petit à petit dans l'app.
 const RECETTES_NOTION = [
-  { name: 'Apple crumble', emoji: '🍏', tags: ['sucré'] },
+  { name: 'Apple crumble', emoji: '🍏', tags: ['sucré'], url: 'https://www.recipetineats.com/apple-crumble/',
+    ingredients: "1kg pommes granny smith\n135g farine\n100g sucre\n180g sucre roux\n2 càs jus de citron\n2 càc cannelle\n90g flocons d'avoine\n1 càc levure chimique\n125g beurre\n1 pincée sel\n1 pot glace vanille",
+    steps: "Préchauffe le four à 180°C.\nÉpluche et coupe les pommes, mélange-les avec 1 càs de farine, le sucre blanc, le jus de citron et 1 càc de cannelle. Verse dans un plat.\nMélange avoine, farine, sucre roux, levure, cannelle, sel et beurre fondu.\nRépartis le crumble sur les pommes.\nEnfourne 30–40 min jusqu'à ce que ce soit doré.\nSers tiède avec une boule de glace vanille." },
   { name: 'Avo toast & eggs', emoji: '🥑', tags: ['rapide','végé'] },
   { name: 'Avocado & salmon toast', emoji: '🥑', tags: ['rapide','poisson'] },
-  { name: 'Avocado chickpea salad', emoji: '🥑', tags: ['salade','végé'] },
+  { name: 'Avocado chickpea salad', emoji: '🥑', tags: ['salade','végé'], url: 'https://theplantbasedschool.com/chickpea-salad/',
+    ingredients: "1 boîte pois chiches\n250g tomates cerises\n1 concombre\n80g olives kalamata\n1 oignon rouge\n150g maïs en boîte\n1 botte persil\n1 avocat\n4 càs huile d'olive\n2 càs jus de citron\n2 càs moutarde\n1 càs miel\n1 càc origan séché\nsel\npoivre",
+    steps: "Rince et égoutte les pois chiches.\nCoupe tomates, concombre, oignon, olives, persil et avocat.\nFouette huile, citron, moutarde, miel, origan, sel et poivre.\nMélange le tout et sers frais." },
   { name: 'Bœuf bourguignon', emoji: '🥩', tags: ['viande'] },
   { name: 'Bolo de brigadeiro', emoji: '🍫', tags: ['sucré'] },
-  { name: 'Brussel sprouts', emoji: '🍁', tags: ['accompagnement'] },
+  { name: 'Brussel sprouts', emoji: '🍁', tags: ['accompagnement'], url: 'https://reciperunner.com/balsamic-maple-roasted-brussels-sprouts-bacon/',
+    ingredients: "700g choux de Bruxelles\n1 càs huile d'olive\n4 tranches bacon\n1 càs sirop d'érable\n1 càs vinaigre balsamique\nsel\npoivre",
+    steps: "Préchauffe le four à 200°C.\nCoupe les choux en deux, mélange avec huile, sel, poivre et le bacon en morceaux.\nRôtis 20–25 min en remuant à mi-cuisson.\nArrose de sirop d'érable et de vinaigre balsamique, mélange et sers." },
   { name: 'Burgers', emoji: '🍔', tags: ['viande','rapide'] },
-  { name: 'Caesar salad', emoji: '🥬', tags: ['salade'] },
-  { name: 'Carnitas', emoji: '🐖', tags: ['viande'] },
+  { name: 'Caesar salad', emoji: '🥬', tags: ['salade'], url: 'https://www.onceuponachef.com/recipes/caesar-salad-dressing.html',
+    ingredients: "2 salades romaines\n100g croûtons\n2 gousses ail\n1 càc pâte d'anchois\n2 càs jus de citron\n1 càc moutarde de Dijon\n1 càc sauce Worcestershire\n230g mayonnaise\n50g parmesan râpé\nsel\npoivre",
+    steps: "Fouette ail pressé, anchois, citron, moutarde et Worcestershire.\nIncorpore la mayonnaise et le parmesan, sale et poivre.\nMélange avec la romaine et les croûtons, termine avec des copeaux de parmesan." },
+  { name: 'Carnitas', emoji: '🐖', tags: ['viande'], url: 'https://www.recipetineats.com/pork-carnitas-mexican-slow-cooker-pulled-pork/',
+    ingredients: "2kg épaule de porc sans os\n2 càc sel\n1 càc poivre\n1 oignon\n1 piment jalapeño\n4 gousses ail\n2 oranges\n1 càs origan séché\n2 càc cumin\n1 càs huile d'olive\n12 tortillas",
+    steps: "Frotte le porc avec sel et poivre.\nMets-le dans la mijoteuse (ou cocotte) avec oignon, jalapeño, ail, jus des oranges, origan et cumin.\nCuis 8h à basse température (ou 3h au four à 160°C, couvert).\nEffiloche la viande à la fourchette.\nFais-la dorer à la poêle avec un peu de jus de cuisson pour la rendre croustillante.\nSers dans des tortillas avec les garnitures préférées de chacun." },
   { name: 'Ceviche', emoji: '🐟', tags: ['poisson'] },
-  { name: 'Chili con carne', emoji: '🌶️', tags: ['viande'] },
-  { name: 'Chocochitas', emoji: '🍪', tags: ['sucré'] },
+  { name: 'Chili con carne', emoji: '🌶️', tags: ['viande'], url: 'https://www.pequerecetas.com/receta/chili-con-carne/',
+    ingredients: "500g bœuf haché\n400g haricots rouges en boîte\n4 gousses ail\n400g tomates concassées\n1 oignon\n1 càc cumin\n1 càs origan séché\n1 pincée piment\n1 poivron rouge\n1 càc sucre\n1 càc paprika doux\nhuile d'olive\nsel\ncoriandre fraîche\n300g riz",
+    steps: "Fais revenir l'oignon dans l'huile d'olive.\nAjoute ail, piment, cumin, paprika et le poivron coupé.\nAjoute la viande hachée et fais-la dorer.\nVerse les tomates concassées, l'origan et le sucre ; mijote 20 min.\nAjoute les haricots égouttés, encore 10 min.\nSers sur du riz avec la coriandre." },
+  { name: 'Chocochitas', emoji: '🍪', tags: ['sucré'], url: 'https://livingsweetmoments.com/mini-crunchy-chocolate-chip-cookies/',
+    ingredients: "225g beurre\n150g sucre\n3 œufs\n1 càc extrait de vanille\n310g farine\n1 càc levure chimique\n1 pincée sel\n130g mini pépites de chocolat",
+    steps: "Bats le beurre mou avec le sucre.\nAjoute les jaunes d'œuf et la vanille.\nIncorpore farine, levure et sel, puis les pépites.\nForme de toutes petites boules sur une plaque.\nCuis à 180°C pendant 10–12 min. Ça en fait plein — parfait pour les petites mains !" },
   { name: 'Chocolate cake', emoji: '🎂', tags: ['sucré'] },
   { name: 'Chopped medi chicken salad', emoji: '🍗', tags: ['salade','viande'] },
-  { name: 'Chorisotto', emoji: '🍛', tags: ['viande'] },
-  { name: 'Chupe', emoji: '🍲', tags: ['soupe'] },
+  { name: 'Chorisotto', emoji: '🍛', tags: ['viande'], url: 'https://jow.fr/recipes/risotto-crevettes-et-chorizo-844mezmwgq53atdt1dsg',
+    ingredients: "280g riz arborio\n100g chorizo\n200g crevettes cuites\n1 cube bouillon de volaille\n1 échalote\n4 càs parmesan râpé\n8cl vin blanc",
+    steps: "Prépare 1L de bouillon.\nFais revenir l'échalote et le chorizo en rondelles.\nAjoute le riz et remue jusqu'à ce qu'il soit nacré.\nDéglace au vin blanc.\nAjoute le bouillon louche par louche pendant ~18 min.\nTermine avec les crevettes et le parmesan." },
+  { name: 'Chupe', emoji: '🍲', tags: ['soupe'], url: 'https://www.yquecocinohoy.com/chupe-de-pollo-venezolano/',
+    ingredients: "2 blancs de poulet\n1 cube bouillon de volaille\n1 oignon\n4 piments doux\n3 brins ciboule\n1 bouquet coriandre\n1 càs ail écrasé\n2 pommes de terre\n2 carottes\n2 boîtes maïs\n4 càs huile d'olive\n40cl crème liquide\n200g fromage blanc doux en dés\nsel",
+    steps: "Cuis les blancs de poulet dans l'eau avec le cube de bouillon, puis effiloche-les.\nFais revenir oignon, ail, piments doux et ciboule dans l'huile.\nAjoute le bouillon, les pommes de terre et les carottes en dés.\nAjoute le maïs et le poulet effiloché, mijote 15 min.\nVerse la crème en fin de cuisson.\nSers avec les dés de fromage et la coriandre." },
   { name: 'Cinnamon rolls', emoji: '🥮', tags: ['sucré'] },
   { name: 'Crispy chicken caesar cutlets', emoji: '🍗', tags: ['viande'] },
-  { name: 'Croziflette', emoji: '🫕', tags: ['viande'] },
-  { name: 'Dirt cake', emoji: '🧁', tags: ['sucré'] },
+  { name: 'Croziflette', emoji: '🫕', tags: ['viande'], url: 'https://www.france-montagnes.com/webzine/gastronomie/recette-croziflette',
+    ingredients: "400g crozets\n4 tranches jambon cru\n1 oignon\n1 reblochon\n30cl crème fraîche",
+    steps: "Cuis les crozets à l'eau bouillante salée, égoutte.\nFais revenir l'oignon émincé et le jambon en lamelles.\nMélange crozets, oignon, jambon et crème dans un plat à gratin.\nPose le reblochon coupé en deux sur le dessus, croûte vers le haut.\nEnfourne 20 min à 200°C. Vive la montagne !" },
+  { name: 'Dirt cake', emoji: '🧁', tags: ['sucré'], url: 'https://joyfoodsunshine.com/dirt-cake/',
+    ingredients: "85cl lait\n2 sachets préparation pudding vanille\n28 biscuits Oreo\n115g beurre\n225g fromage frais type Philadelphia\n120g sucre glace\n40cl crème entière à fouetter\n1 sachet bonbons vers gélifiés",
+    steps: "Prépare le pudding vanille avec le lait, réserve au frais.\nBats beurre mou, fromage frais et sucre glace.\nMonte la crème en chantilly et incorpore-la au mélange avec le pudding.\nÉcrase les Oreos (garde-en pour le dessus).\nAlterne couches de crème et d'Oreos dans un plat, termine par les miettes « terre ».\nAu frigo 1h, plante les vers gélifiés — les enfants adorent ! 🪱" },
   { name: 'Ensalada de esparragos', emoji: '🥗', tags: ['salade','végé'] },
-  { name: 'Focaccia Bruschetta', emoji: '🇮🇹', tags: ['végé'] },
-  { name: 'Frijoles', emoji: '🫘', tags: ['végé'] },
+  { name: 'Focaccia Bruschetta', emoji: '🇮🇹', tags: ['végé'], url: 'https://alexandracooks.com/2018/03/02/overnight-refrigerator-focaccia-best-focaccia/',
+    ingredients: "510g farine\n2 càc sel\n2 càc levure de boulanger instantanée\n45cl eau tiède\nbeurre\n4 càs huile d'olive\nfleur de sel\nromarin frais",
+    steps: "Mélange farine, sel et levure, puis l'eau tiède — pas besoin de pétrir.\nCouvre et laisse au frigo toute la nuit (ou 1h30 à température ambiante).\nForme 2 boules dans des moules beurrés et huilés, laisse lever 1h30–2h.\nCreuse la pâte avec les doigts huilés, arrose d'huile, fleur de sel et romarin.\nEnfourne 25–30 min à 220°C jusqu'à ce que ce soit bien doré." },
+  { name: 'Frijoles', emoji: '🫘', tags: ['végé'], url: 'https://minimalistbaker.com/mexican-pinto-beans-scratch-1-pot/',
+    ingredients: "450g haricots pinto secs\n1 càs huile d'olive\n1 oignon blanc\n3 gousses ail\n1 cube bouillon de légumes\n1 piment chipotle en sauce adobo\n120g tomates concassées\n1 càs cumin\n1 càs chili en poudre\n1 pincée cannelle\nsel\npoivre",
+    steps: "Fais tremper les haricots une nuit dans l'eau froide.\nFais revenir l'oignon et l'ail dans l'huile.\nAjoute les haricots égouttés, de l'eau à hauteur, le bouillon, le chipotle et les épices.\nMijote 40–50 min à couvert jusqu'à tendreté.\nAjoute les tomates, poursuis 10 min.\nÉcrase partiellement et ajuste le sel." },
   { name: 'Gratin', emoji: '🥔', tags: ['accompagnement'] },
   { name: 'Guacamole', emoji: '🥑', tags: ['accompagnement','apéro'] },
-  { name: 'Lasagnes', emoji: '👨🏻', tags: ['pâtes','viande'] },
-  { name: 'Lemon blueberry loaf', emoji: '🫐', tags: ['sucré'] },
-  { name: 'Mediterranean Tuna Chickpea', emoji: '🥗', tags: ['salade','poisson'] },
+  { name: 'Lasagnes', emoji: '👨🏻', tags: ['pâtes','viande'], url: 'https://www.spendwithpennies.com/easy-homemade-lasagna/',
+    ingredients: "12 feuilles de lasagnes\n400g mozzarella râpée\n50g parmesan râpé\n250g bœuf haché\n250g chair à saucisse\n1 oignon\n2 gousses ail\n1l sauce tomate\n2 càs concentré de tomate\n1 càc herbes italiennes\n500g ricotta\n1 botte persil\n1 œuf\nsel",
+    steps: "Cuis les feuilles de lasagnes si nécessaire.\nFais revenir les viandes avec l'oignon et l'ail ; ajoute sauce tomate, concentré et herbes, mijote 5 min.\nMélange ricotta, persil, œuf et parmesan.\nMonte : sauce, pâtes, ricotta, mozzarella — trois couches.\nEnfourne 45 min à 190°C couvert d'alu, puis 15 min découvert.\nLaisse reposer 10 min avant de couper." },
+  { name: 'Lemon blueberry loaf', emoji: '🫐', tags: ['sucré'], url: 'https://www.instagram.com/p/C3p19GSAAWD/' },
+  { name: 'Mediterranean Tuna Chickpea', emoji: '🥗', tags: ['salade','poisson'], url: 'https://www.platingsandpairings.com/mediterranean-chickpea-tuna-salad/',
+    ingredients: "2 boîtes thon\n1 boîte pois chiches\n1 concombre\n1 poivron rouge\n1 oignon rouge\n80g olives kalamata\n1 botte persil\n12cl huile d'olive\n6cl jus de citron\n2 gousses ail\n1 càc origan séché\n1 càc moutarde de Dijon\nsel\npoivre",
+    steps: "Égoutte le thon et les pois chiches.\nCoupe concombre, poivron, oignon et olives.\nFouette huile, citron, ail, origan, moutarde, sel et poivre.\nMélange le tout — encore meilleur après 30 min au frais." },
   { name: 'Nutella maison', emoji: '🍫', tags: ['sucré'] },
-  { name: 'Oatmeal Cookies', emoji: '🍪', tags: ['sucré'] },
+  { name: 'Oatmeal Cookies', emoji: '🍪', tags: ['sucré'], url: 'https://sallysbakingaddiction.com/oatmeal-chocolate-chip-cookies/',
+    ingredients: "190g farine\n1 càc cannelle\n1 càc bicarbonate\n1 pincée sel\n225g beurre\n200g sucre roux\n100g sucre\n2 œufs\n1 càs miel\n2 càc extrait de vanille\n255g flocons d'avoine\n315g pépites de chocolat",
+    steps: "Bats le beurre mou avec les deux sucres.\nAjoute œufs, miel et vanille.\nIncorpore farine, cannelle, bicarbonate et sel.\nAjoute l'avoine et les pépites.\nLaisse la pâte 30–45 min au frigo.\nCuis à 180°C pendant 12–14 min." },
   { name: 'Pasta carbonara', emoji: '🍝', tags: ['pâtes'] },
   { name: 'Pasta greens', emoji: '🍝', tags: ['pâtes','végé'] },
-  { name: 'Polvo Largareiro', emoji: '🐙', tags: ['poisson'] },
-  { name: 'Polvorosa de pollo', emoji: '🍗', tags: ['viande'] },
+  { name: 'Polvo Largareiro', emoji: '🐙', tags: ['poisson'], url: 'https://www.youtube.com/watch?v=i5VJBWVqog8' },
+  { name: 'Polvorosa de pollo', emoji: '🍗', tags: ['viande'], url: 'https://kristinaencasa.com/cms/es/contenidos/polvorosa-de-pollo',
+    ingredients: "500g farine\n100g sucre\n1 càc sel\n1 càc levure chimique\n280g beurre\n3 œufs\n3 blancs de poulet\n2 càs huile\n1 oignon\n3 gousses ail\n1 poivron rouge\n3 piments doux\n3 tomates\n1 cube bouillon de volaille\n10cl vin blanc\n2 càs concentré de tomate\n1 càc sucre roux\n2 càs câpres\n100g olives\n60g raisins secs",
+    steps: "Préchauffe le four à 175°C.\nPâte : mélange farine, sucre, sel et levure ; ajoute 250g de beurre et les jaunes d'œuf, pétris et mets au frais.\nFonce la moitié de la pâte dans un moule et précuis jusqu'à ce qu'elle dore.\nGuiso : cuis les blancs de poulet au beurre puis coupe-les en petits dés.\nFais un sofrito : oignon, ail, poivron et piments doux, puis les tomates.\nAjoute poulet, bouillon, vin, concentré, sucre, câpres, olives et raisins ; mijote.\nRemplis le moule, couvre avec le reste de pâte, pique-la.\nEnfourne environ 1h. ¡Buen provecho! 🇻🇪" },
   { name: 'Quiche aux brocolis', emoji: '🥚', tags: ['végé'] },
-  { name: 'Quiche chèvre épinards', emoji: '🥬', tags: ['végé'] },
-  { name: 'Reese’s buttercups', emoji: '❤️', tags: ['sucré'] },
-  { name: 'Salmon - Gordon Ramsay', emoji: '🎏', tags: ['poisson'] },
+  { name: 'Quiche chèvre épinards', emoji: '🥬', tags: ['végé'], url: 'https://jow.fr/recipes/quiche-chevre-epinards-89nzh3fuhktx84vm06ld',
+    ingredients: "1 pâte brisée\n3 œufs\n3 càs crème fraîche\n200g bûche de chèvre\n400g épinards surgelés",
+    steps: "Préchauffe le four à 180°C.\nDécongèle et égoutte bien les épinards.\nFonce la pâte dans un moule et pique-la.\nBats les œufs avec la crème, sel et poivre.\nRépartis épinards et rondelles de chèvre, verse l'appareil.\nEnfourne 35–40 min." },
+  { name: 'Reese’s buttercups', emoji: '❤️', tags: ['sucré'], url: 'https://www.favfamilyrecipes.com/homemade-reeses-peanut-butter-cups/',
+    ingredients: "90g biscuits type spéculoos\n120g sucre glace\n250g beurre de cacahuète\n140g beurre\n340g pépites de chocolat",
+    steps: "Écrase les biscuits et mélange-les avec le sucre glace, le beurre de cacahuète et 100g de beurre fondu.\nFais fondre le chocolat avec le reste du beurre.\nDans des caissettes : une couche de chocolat, au frais 10 min.\nUne couche de mélange cacahuète.\nRecouvre de chocolat.\nAu frigo 1h avant de démouler." },
+  { name: 'Salmon - Gordon Ramsay', emoji: '🎏', tags: ['poisson'], url: 'https://www.instagram.com/p/C3sVnJZrd35/' },
   { name: 'Saucisses lentilles', emoji: '🐷', tags: ['viande'] },
-  { name: 'Saumon en croute', emoji: '🎏', tags: ['poisson'] },
-  { name: 'Shawarma', emoji: '🌯', tags: ['viande'] },
+  { name: 'Saumon en croute', emoji: '🎏', tags: ['poisson'], url: 'https://jow.fr/recipes/filet-de-saumon-en-croute-tomates-et-courgettes-8nxr1k0elzpd3k4r08hn',
+    ingredients: "600g filet de saumon\n600g courgettes\n400g tomates cerises\n80g parmesan râpé\n60g beurre\n40g chapelure",
+    steps: "Préchauffe le four à 200°C.\nMélange beurre mou, parmesan et chapelure.\nPose le saumon sur une plaque et recouvre-le de cette croûte.\nDispose courgettes en rondelles et tomates cerises autour, filet d'huile, sel.\nEnfourne 20–25 min." },
+  { name: 'Shawarma', emoji: '🌯', tags: ['viande'], url: 'https://www.instagram.com/reel/C4OaVJqubpp/' },
   { name: 'Shawarma chicken pan with smashed potatoes', emoji: '🌯', tags: ['viande'] },
-  { name: 'Tagliatelles crevettes & chorizo', emoji: '🍤', tags: ['pâtes','poisson'] },
-  { name: 'Tequeños', emoji: '🇻🇪', tags: ['apéro'] },
+  { name: 'Tagliatelles crevettes & chorizo', emoji: '🍤', tags: ['pâtes','poisson'], url: 'https://jow.fr/recipes/tagliatelles-crevettes-et-chorizo-8hd1a0fk621skrs615vb',
+    ingredients: "400g tagliatelles\n320g crevettes cuites\n4 càs crème fraîche\n100g chorizo\n240g petits pois surgelés",
+    steps: "Cuis les pâtes, garde une louche d'eau de cuisson.\nCoupe le chorizo en fines rondelles.\nFais-le sauter 2 min à feu vif avec les crevettes.\nAjoute petits pois et crème, sel, poivre, 3–4 min à feu moyen.\nMélange avec les pâtes et un peu d'eau de cuisson, et sers !" },
+  { name: 'Tequeños', emoji: '🇻🇪', tags: ['apéro'], url: 'https://www.youtube.com/watch?v=o7qjoF1ryhA' },
   { name: 'Torta de queso (familia)', emoji: '🍰', tags: ['sucré'] },
   { name: 'Torta humeda de limon', emoji: '🍋', tags: ['sucré'] },
-  { name: 'Vegetable Lo Mein for Two', emoji: '🍜', tags: ['pâtes','végé'] },
+  { name: 'Vegetable Lo Mein for Two', emoji: '🍜', tags: ['pâtes','végé'], url: 'https://www.forkinthekitchen.com/vegetable-lo-mein-for-two/',
+    ingredients: "2 càs sauce huître\n1 càc huile de sésame\n4 càs sauce soja\n225g nouilles chinoises\n3 càs huile végétale\n1 oignon\n4 gousses ail\n2 carottes\n1 poivron rouge\n200g pois gourmands\n2 brins ciboule",
+    steps: "Mélange sauce huître, huile de sésame et sauce soja.\nCuis les nouilles selon le paquet.\nFais sauter oignon et ail à feu vif.\nAjoute carottes, poivron et pois gourmands, 3–4 min.\nAjoute nouilles et sauce, 2 min en remuant.\nParsème de ciboule." },
 ];
 
 const BRAVOS = [
@@ -82,10 +126,10 @@ const BRAVOS = [
 // Rayons du magasin : mot-clé → rayon (pour ranger la liste de courses)
 // L'Épicerie est en premier : "coulis de tomate" doit y aller, pas aux légumes frais
 const RAYONS = [
-  ['🥫 Épicerie', ['pâtes','riz','farine','sucre','sel','poivre','huile','sauce','conserve','céréales','chocolat','café','thé','biscuit','gâteau','semoule','lentille','pois chiche','coulis','tortilla','taco','pizza','confiture','miel','vinaigre','moutarde','mayonnaise','ketchup','chips','sirop','jus','eau','soda','épice','herbe','bouillon','levure','olive','cornichon','soupe']],
-  ['🥬 Fruits & Légumes', ['pomme de terre','patate','tomate','salade','carotte','courgette','oignon','ail','citron','banane','pomme','poire','fraise','framboise','poireau','haricot','épinard','champignon','concombre','poivron','avocat','brocoli','melon','raisin','kiwi','orange','clémentine','fruit','légume','échalote','radis','navet','potiron','courge']],
-  ['🥛 Crèmerie', ['lait','beurre','yaourt','crème','fromage','œuf','oeuf','mozzarella','gruyère','emmental','parmesan','râpé','camembert','compote']],
-  ['🥩 Viande & Poisson', ['poulet','bœuf','boeuf','steak','jambon','lardon','saucisse','viande','poisson','saumon','cabillaud','thon','crevette','dinde','porc','merguez','haché','pané','agneau','veau']],
+  ['🥫 Épicerie', ['pâtes','riz','farine','sucre','sel','poivre','huile','sauce','conserve','céréales','chocolat','café','thé','biscuit','gâteau','semoule','lentille','pois chiche','coulis','tortilla','taco','pizza','confiture','miel','vinaigre','moutarde','mayonnaise','ketchup','chips','sirop','jus','eau','soda','épice','herbe','bouillon','levure','olive','cornichon','soupe','crozets','nouilles','avoine','chapelure','câpres','raisins secs','haricots rouges','haricots pinto','maïs','oreo','croûtons','anchois','worcestershire','cumin','paprika','origan','cannelle','bicarbonate','vanille','pudding','curry','pépites','concentré','mélasse','cacahuète','spéculoos','vers gélifiés','pesto','thon']],
+  ['🥬 Fruits & Légumes', ['pomme de terre','patate','tomate','salade','carotte','courgette','oignon','ail','citron','banane','pomme','poire','fraise','framboise','poireau','haricot','épinard','champignon','concombre','poivron','avocat','brocoli','melon','raisin','kiwi','orange','clémentine','fruit','légume','échalote','radis','navet','potiron','courge','persil','coriandre','basilic','ciboule','romarin','menthe','piment','jalapeño','choux','chou','pois gourmands','romaine','myrtille','gingembre']],
+  ['🥛 Crèmerie', ['lait','beurre','yaourt','crème','fromage','œuf','oeuf','mozzarella','gruyère','emmental','parmesan','râpé','camembert','compote','reblochon','ricotta','chèvre','feta','mascarpone']],
+  ['🥩 Viande & Poisson', ['poulet','bœuf','boeuf','steak','jambon','lardon','saucisse','viande','poisson','saumon','cabillaud','crevette','dinde','porc','merguez','haché','pané','agneau','veau','chorizo','bacon','chair à saucisse']],
   ['🥖 Boulangerie', ['pain','baguette','brioche','croissant','pain de mie']],
   ['🧊 Surgelés', ['surgelé','glace','frites','bâtonnet']],
   ['🧴 Hygiène & Maison', ['savon','shampoing','shampooing','dentifrice','lessive','papier toilette','essuie-tout','éponge','sac poubelle','liquide vaisselle','mouchoir','couche','gel douche','déodorant','brosse']],
@@ -442,6 +486,15 @@ function resteNotion() {
   return RECETTES_NOTION.filter(r => !noms.has(norm(r.name)));
 }
 
+// Recettes déjà importées mais sans ingrédients, alors que Notion en a maintenant
+function aCompleterNotion() {
+  return state.recipes.filter(r => {
+    if ((r.ingredients || '').trim()) return false;
+    const n = RECETTES_NOTION.find(x => norm(x.name) === norm(r.name));
+    return n && n.ingredients;
+  });
+}
+
 function repasDuJour(cle, jour) {
   const plan = (state.weekPlans[cle] || {})[jour];
   if (!plan) return null;
@@ -490,6 +543,7 @@ function rendreRepas() {
       ${recettes || '<p class="empty-msg">Ajoute tes recettes préférées !</p>'}
       ${estParent() ? `<button class="btn-secondary" style="width:100%;margin-top:8px" data-action="editerRecette">➕ Nouvelle recette</button>` : ''}
       ${estParent() && resteNotion().length ? `<button class="btn-secondary" style="width:100%;margin-top:8px" data-action="importerNotion">📥 Importer mes recettes Notion (${resteNotion().length})</button>` : ''}
+      ${estParent() && aCompleterNotion().length ? `<button class="btn-secondary" style="width:100%;margin-top:8px" data-action="completerNotion">🧾 Récupérer les ingrédients des recettes (${aCompleterNotion().length})</button>` : ''}
     </div>`;
 }
 
@@ -510,7 +564,7 @@ function rayonDe(nom) {
 }
 
 function parserIngredient(ligne) {
-  const m = ligne.trim().match(/^([\d.,]+\s*(?:kg|g|l|cl|ml|gousses?|tranches?|sachets?|boîtes?|paquets?)?)\s+(.{2,})$/i);
+  const m = ligne.trim().match(/^([\d.,]+\s*(?:kg|g|l|cl|ml|càs|càc|gousses?|tranches?|sachets?|boîtes?|paquets?|pincées?|cubes?|brins?|bottes?|pots?|feuilles?|tasses?)?)\s+(.{2,})$/i);
   return m ? { qty: m[1].trim(), name: m[2].trim() } : { qty: '', name: ligne.trim() };
 }
 
@@ -871,12 +925,26 @@ const actions = {
   importerNotion() {
     const nouvelles = resteNotion();
     for (const r of nouvelles) {
-      state.recipes.push({ id: uid(), name: r.name, emoji: r.emoji, tags: r.tags, ingredients: '' });
+      state.recipes.push({ id: uid(), name: r.name, emoji: r.emoji, tags: r.tags, ingredients: r.ingredients || '', steps: r.steps || '', url: r.url || '' });
     }
     state.recipes.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
     sauver('recipes');
     confettis(60);
     toast(`📥 ${nouvelles.length} recettes Notion importées !`);
+    rendreTout();
+  },
+
+  completerNotion() {
+    const liste = aCompleterNotion();
+    for (const r of liste) {
+      const n = RECETTES_NOTION.find(x => norm(x.name) === norm(r.name));
+      r.ingredients = n.ingredients;
+      if (n.steps && !r.steps) r.steps = n.steps;
+      if (n.url && !r.url) r.url = n.url;
+    }
+    sauver('recipes');
+    confettis(60);
+    toast(`🧾 Ingrédients récupérés pour ${liste.length} recettes !`);
     rendreTout();
   },
 
