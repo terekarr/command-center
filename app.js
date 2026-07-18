@@ -17,7 +17,10 @@ const EMOJIS_MISSION = ['🛏️','🧸','🍴','🍽️','📚','🧺','🗑️
 const EMOJIS_RECETTE = ['🍝','🍗','🐟','🍕','🥣','🥞','🌮','🍔','🥗','🍚','🥘','🍜','🥧','🍳','🥪','🍛'];
 const EMOJIS_RECOMPENSE = ['🎬','🍦','🎮','🎁','🏊','🎡','🧁','⚽','🎨','📖'];
 const COULEURS = ['#f06ca8','#4b9cf0','#4bc98a','#f0a04b','#7c6cf0','#e0b040'];
-const TAGS_RECETTE = ['rapide','pâtes','poisson','viande','végé','soupe','sucré','salade','accompagnement','apéro'];
+const TAGS_RECETTE = ['rapide','pâtes','poisson','viande','végé','soupe','sucré','salade','accompagnement','apéro','petit-déj'];
+
+// Onglets de la boîte à recettes
+const CATEGORIES = [['tous','Tout'], ['favoris','❤️ Favoris'], ['petitdej','🍳 Petit-déj'], ['repas','🍽️ Repas'], ['dessert','🍰 Dessert']];
 // Ces tags ne sont pas des dîners : le suggéreur de semaine les ignore
 const TAGS_PAS_DINER = ['sucré','accompagnement','apéro'];
 
@@ -145,7 +148,7 @@ function etatParDefaut() {
   return {
     profiles: [], chores: [], completions: {}, points: {}, rewards: [],
     redemptions: [], recipes: [], weekPlans: {}, grocery: [], groceryHistory: {},
-    settings: {},
+    votes: {}, settings: {},
   };
 }
 
@@ -190,6 +193,8 @@ let fb = null;            // outils Firebase quand la synchro est active
 let vueActive = 'home';
 let semaineOffset = 0;    // navigation de semaine dans l'écran Repas
 let modeMagasin = false;
+let catBoite = 'tous';    // onglet actif de la boîte à recettes
+let catModal = 'repas';   // onglet actif dans le choix du repas du jour
 
 function sauver(...cles) {
   localStorage.setItem('qg-state', JSON.stringify(state));
@@ -505,12 +510,37 @@ const FONDS_TUILE = [
   'linear-gradient(135deg,#f6d5e5,#d5daf6)', 'linear-gradient(135deg,#d5f6e3,#d5e9f6)',
   'linear-gradient(135deg,#f6ecd5,#f6d5d5)', 'linear-gradient(135deg,#e3d5f6,#d5f0f6)',
 ];
+function nbVotes(id) { return Object.keys((state.votes || {})[id] || {}).length; }
+
+// dessert / petit-déj / repas — déduit des étiquettes
+function categorieDe(r) {
+  const t = r.tags || [];
+  if (t.includes('petit-déj')) return 'petitdej';
+  if (t.includes('sucré')) return 'dessert';
+  return 'repas';
+}
+
+function recettesFiltrees(cat) {
+  if (cat === 'favoris') {
+    return state.recipes.filter(r => nbVotes(r.id) > 0).sort((a, b) => nbVotes(b.id) - nbVotes(a.id));
+  }
+  if (cat !== 'tous') return state.recipes.filter(r => categorieDe(r) === cat);
+  return state.recipes;
+}
+
+function barreCategories(active, action, extra = '') {
+  return `<div class="chip-row" style="margin-bottom:10px">` + CATEGORIES.map(([id, label]) =>
+    `<button class="chip" data-action="${action}" data-cat="${id}" ${extra} style="${id === active ? 'background:var(--violet);color:#fff' : ''}">${label}</button>`).join('') + `</div>`;
+}
+
 function tuileRecette(r, action, extra = '') {
   let h = 0;
   for (const c of r.name) h += c.charCodeAt(0);
+  const votes = nbVotes(r.id);
   return `<div class="recipe-tile" data-action="${action}" data-id="${r.id}" data-nom="${esc(norm(r.name))}" ${extra} style="background:${FONDS_TUILE[h % FONDS_TUILE.length]}">
     <div class="tile-emoji">${r.emoji}</div>
     ${r.img ? `<img src="${esc(r.img)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
+    ${votes ? `<div class="tile-votes">❤️ ${votes}</div>` : ''}
     <div class="tile-name">${esc(r.name)}</div>
   </div>`;
 }
@@ -552,7 +582,7 @@ function rendreRepas() {
     </div>`;
   }).join('');
 
-  const grille = state.recipes.map(r => tuileRecette(r, 'voirRecette')).join('');
+  const grille = recettesFiltrees(catBoite).map(r => tuileRecette(r, 'voirRecette')).join('');
 
   $('#view-meals').innerHTML = `
     <div class="card">
@@ -564,9 +594,10 @@ function rendreRepas() {
     </div>
     <div class="section-title">📖 Boîte à recettes</div>
     <div class="card">
+      ${barreCategories(catBoite, 'filtrerBoite')}
       <input class="search-input" id="recherche-recettes" placeholder="🔍 Chercher une recette…">
       <div class="recipe-grid" id="grille-recettes">${grille || ''}</div>
-      ${grille ? '' : '<p class="empty-msg">Ajoute tes recettes préférées !</p>'}
+      ${grille ? '' : `<p class="empty-msg">${catBoite === 'favoris' ? 'Pas encore de favoris — ouvrez une recette et tapez ❤️ J\'adore !' : 'Ajoute tes recettes préférées !'}</p>`}
       ${estParent() ? `<button class="btn-secondary" style="width:100%;margin-top:10px" data-action="editerRecette">➕ Nouvelle recette</button>` : ''}
       ${estParent() && resteNotion().length ? `<button class="btn-secondary" style="width:100%;margin-top:8px" data-action="importerNotion">📥 Importer mes recettes Notion (${resteNotion().length})</button>` : ''}
       ${estParent() && aCompleterNotion().length ? `<button class="btn-secondary" style="width:100%;margin-top:8px" data-action="completerNotion">🔄 Mettre à jour depuis Notion (${aCompleterNotion().length})</button>` : ''}
@@ -871,13 +902,35 @@ const actions = {
   semainePrec() { semaineOffset--; rendreTout(); },
   semaineSuiv() { semaineOffset++; rendreTout(); },
 
+  filtrerBoite({ cat }) { catBoite = cat; rendreTout(); },
+  filtrerModal({ cat, jour }) { catModal = cat; actions.choisirRepas({ jour }); },
+
+  voterRecette({ id }) {
+    const moi = profilActuel();
+    const votes = (state.votes ||= {});
+    const v = (votes[id] ||= {});
+    if (v[moi.id]) {
+      delete v[moi.id];
+      if (!Object.keys(v).length) delete votes[id];
+    } else {
+      v[moi.id] = Date.now();
+      const r = state.recipes.find(x => x.id === id);
+      toast(`❤️ ${moi.name} adore ${r ? r.name : 'cette recette'} !`);
+      confettis(30);
+    }
+    sauver('votes');
+    rendreTout();
+    actions.voirRecette({ id });
+  },
+
   choisirRepas({ jour }) {
     const cle = cleSemaine(semaineOffset);
     const plan = (state.weekPlans[cle] || {})[jour];
     ouvrirModale(`<h3>Repas du ${JOURS_LONGS[jour]}</h3>
+      ${barreCategories(catModal, 'filtrerModal', `data-jour="${jour}"`)}
       <input class="search-input" id="recherche-modal" placeholder="🔍 Chercher une recette…">
       <div class="recipe-grid" id="grille-modal" style="max-height:42vh;overflow-y:auto">
-        ${state.recipes.map(r => tuileRecette(r, 'poserRecette', `data-jour="${jour}"`)).join('')}
+        ${recettesFiltrees(catModal).map(r => tuileRecette(r, 'poserRecette', `data-jour="${jour}"`)).join('')}
       </div>
       <div class="form-field" style="margin-top:12px"><label>Ou écris un repas</label>
         <input id="f-repas-libre" placeholder="ex : restes, resto, tartines…" value="${plan?.type === 'custom' ? esc(plan.name) : ''}"></div>
@@ -897,6 +950,16 @@ const actions = {
       ${r.img ? `<img class="recipe-hero" src="${esc(r.img)}" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
       <h3>${r.emoji} ${esc(r.name)}</h3>
       ${(r.tags || []).length ? `<div class="recipe-view-tags">${r.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
+      ${(() => {
+        const moi = profilActuel();
+        const jaime = !!((state.votes || {})[r.id] || {})[moi.id];
+        const fans = Object.keys((state.votes || {})[r.id] || {})
+          .map(pid => state.profiles.find(p => p.id === pid)).filter(Boolean)
+          .map(p => `<span title="${esc(p.name)}" style="font-size:24px">${p.emoji}</span>`).join(' ');
+        return `<div style="display:flex;align-items:center;gap:12px;margin:10px 0">
+          <button class="${jaime ? 'btn-primary' : 'btn-secondary'}" style="width:auto" data-action="voterRecette" data-id="${r.id}">❤️ J'adore${jaime ? ' !' : ''}</button>
+          <span>${fans}</span></div>`;
+      })()}
       ${ings.length ? `<div class="section-title">🧾 Ingrédients</div><ul class="ing-list">${ings.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : '<p class="empty-msg">Pas encore d\'ingrédients — un parent peut les ajouter avec ✏️</p>'}
       ${etapes.length ? `<div class="section-title">👩‍🍳 Préparation</div><ol class="steps-list">${etapes.map(e => `<li>${esc(e)}</li>`).join('')}</ol>` : ''}
       ${r.url ? `<a class="btn-secondary" style="display:block;text-align:center;margin-top:10px;text-decoration:none" href="${esc(r.url)}" target="_blank" rel="noopener">🔗 Voir la recette originale</a>` : ''}
@@ -944,10 +1007,13 @@ const actions = {
     }).length;
     let poisson = compteTag('poisson'), pates = compteTag('pâtes');
 
-    // seuls les "vrais dîners" sont proposés (pas les desserts, apéros ou accompagnements)
+    // seuls les "vrais dîners" sont proposés (pas les desserts, apéros ou accompagnements),
+    // et les favoris de la famille (❤️) ont plus de chances de sortir
     const pool = state.recipes
       .filter(r => !dejaPris.has(r.id) && !(r.tags || []).some(t => TAGS_PAS_DINER.includes(t)))
-      .sort(() => Math.random() - 0.5);
+      .map(r => ({ r, score: nbVotes(r.id) * 1.5 + Math.random() * 3 }))
+      .sort((a, b) => b.score - a.score)
+      .map(x => x.r);
     let ajouts = 0;
     for (let j = 0; j < 7; j++) {
       if (semaine[j]) continue;
